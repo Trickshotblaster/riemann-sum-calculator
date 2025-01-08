@@ -1,18 +1,21 @@
 import numpy as np
+import math
+from math import cos, sin, tan, pi
 
 def f(x):
-    return 2 + 2*x**2
+    return 1 + cos(x/2)
 
 def calc_area(l, w):
     return l * w
 
+# todo: gradient descent
 def get_min(func, x_min, x_max, precision = 1e-6):
     return min(func(x) for x in np.arange(x_min, x_max, precision))
 
 def get_max(func, x_min, x_max, precision = 1e-6):
     return max(func(x) for x in np.arange(x_min, x_max, precision))
 
-def calc_sum(x_1, x_2, N, mode="lower", endpoints="none"):
+def calc_sum(f, x_1, x_2, N, mode="lower", endpoints="none"):
     assert x_2 > x_1, "x2 must be greater than x1"
     delta_x = (x_2 - x_1) / N
     total_area = 0.0
@@ -44,4 +47,11 @@ def calc_sum(x_1, x_2, N, mode="lower", endpoints="none"):
                 total_area += area
     return total_area
 
-print(calc_sum(-1, 2, 6, mode="endpoints", endpoints="middle"))
+print(calc_sum(
+    f=f,
+    x_1=-pi,
+    x_2=pi,
+    N=3,
+    mode="upper",
+    endpoints="none"
+))
