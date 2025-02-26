@@ -14,11 +14,8 @@ Have fun!
 
 import numpy as np
 import math
-from math import cos, sin, tan, pi
-
-def f(x):
-    """Replace this with your function, remember x^2 is written as x**2 in python"""
-    return 1 + cos(x/2)
+from math import cos, sin, tan, pi, e, exp
+from math import log as ln
 
 def calc_area(l, w):
     """Most useful function ever created"""
@@ -81,18 +78,80 @@ def calc_sum(f, x_1, x_2, N, mode="lower", endpoints="none", precision=1e-6):
                 value_for_range = f(x_1 + ((n-1)*delta_x) + delta_x/2)
                 area = calc_area(delta_x, value_for_range)
                 total_area += area
+    elif mode == "trapezoid":
+        for n in range(1, N+1):
+            a = f(x_1 + (n-1)*delta_x) 
+            b = f(x_1 + n*delta_x)
+            area = ((a+b)/2) * delta_x
+            total_area += area
+    elif mode == "simpson":
+        assert N % 2 == 0, "n must be even"
+        for n in range(0, N+1): 
+            f_x_i = f(x_1 + n * delta_x)
+            if n == 0 or n == N:
+                area = (delta_x/3) * f_x_i
+                total_area += area
+            elif (n-1) % 2 == 0:
+                area = (4 * delta_x / 3) * f_x_i
+                total_area += area
+            else:
+                area = (2 * delta_x / 3) * f_x_i
+                total_area += area
+
     return total_area
 
 def main():
-    print(calc_sum(
+    f = lambda x: 13 * cos(x**2)
+    n = 4
+    lower_bound = 0
+    upper_bound = 1
+
+    real = calc_sum(
         f=f,
-        x_1=-5,
-        x_2=5,
-        N=3,
-        mode="lower",
-        endpoints="none",
-        precision=1e-6
-    ))
+        x_1=lower_bound,
+        x_2=upper_bound,
+        N=10000,
+        mode="endpoints",
+        endpoints="middle"
+    )
+
+    print("trapezoidal")
+    T_n = calc_sum(
+        f=f,
+        x_1=lower_bound,
+        x_2=upper_bound,
+        N=n,
+        mode="trapezoid",
+    )
+    E_T = real - T_n
+    print(T_n)
+    print("Error:", E_T)
+    
+    print("midpoint")
+    M_n = calc_sum(
+        f=f,
+        x_1=lower_bound,
+        x_2=upper_bound,
+        N=n,
+        mode="endpoints",
+        endpoints="middle",
+    )
+    E_M = real - M_n
+    print(M_n)
+    print("Error:", E_M)
+
+    print("simpson")
+    S_n = calc_sum(
+        f=f,
+        x_1=lower_bound,
+        x_2=upper_bound,
+        N=n,
+        mode="simpson",
+    )
+    E_S = real - S_n
+    print(S_n)
+    print("Error:", E_S)
+
 
 if __name__ == "__main__":
     main()
