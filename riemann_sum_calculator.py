@@ -4,9 +4,10 @@ Estimates the area under a curver using Riemann Sums numerically
 Requirements: numpy (pip install numpy), although could be modified do be done without
 
 Use:
-Replace f(x) with any one-variable function, making sure to return the value
+Replace `f = lambda x: ...` with any one-variable function involving x (eg. lambda x: x**2)
 Then, use calc_sum to find the Riemann sum for the function on the interval
 with N subdivisions
+By default main() will print out trapezoidal, midpoint, and simpson rule for given function along with error
 Be careful when changing precision, it can help but is terribly implemented and
 a 10x in precision will result in 10x memory footprint (just buy 128TB ram bro)
 Have fun!
