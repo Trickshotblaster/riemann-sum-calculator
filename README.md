@@ -17,7 +17,7 @@ Prerequisites: ```numpy``` (install via ```pip install numpy```)
 
 1) Clone the git repository onto your machine
 2) ```cd riemann_sum_calculator``` and open in a text editor
-3) Edit ```def f(x)``` to return your function using ```x```.
+3) Edit ```f = lambda x: ...``` to return your function using ```x```, eg. ```lambda x: x**2``` for $y=x^2$.
 4) Edit ```main()``` to change the parameters sent to ```calc_sum```
 5) Enjoy and prosper
 6) (Optional) buy 128TB ram for higher precision calculations
